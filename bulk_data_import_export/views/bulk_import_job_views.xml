@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="bulk_import_job_view_form" model="ir.ui.view">
+        <field name="name">bulk.import.job.form</field>
+        <field name="model">bulk.import.job</field>
+        <field name="arch" type="xml">
+            <form string="Import">
+                <header>
+                    <button name="action_start" string="Start Import" type="object" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_test" string="Test File" type="object"
+                            invisible="state != 'draft'"
+                            help="Check every row without saving anything; failed rows go to the error report."/>
+                    <button name="action_download_template" string="Download Template" type="object"
+                            invisible="state != 'draft' or not model_id"/>
+                    <button name="action_refresh" string="Refresh" type="object" icon="fa-refresh"
+                            invisible="state not in ('queued', 'running')"/>
+                    <button name="action_cancel" string="Cancel" type="object"
+                            invisible="state not in ('queued', 'running')"
+                            confirm="Stop the import? Rows already saved stay saved; you can resume later."/>
+                    <button name="action_resume" string="Resume" type="object" class="btn-primary"
+                            invisible="state not in ('failed', 'cancelled')"/>
+                    <button name="action_reset" string="Back to Draft" type="object"
+                            invisible="state in ('draft', 'queued', 'running')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,running,done"/>
+                </header>
+                <sheet>
+                    <div class="alert alert-info mb-3" role="status" invisible="not test_mode or state == 'draft'">
+                        Test run: rows were checked but nothing was saved.
+                    </div>
+                    <div class="alert alert-danger mb-3" role="alert" invisible="not message">
+                        <field name="message"/>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" readonly="state != 'draft'"/></h1>
+                    </div>
+                    <group>
+                        <group string="What to import">
+                            <field name="model_id" options="{'no_create': True}" readonly="state != 'draft'"/>
+                            <field name="model_name" invisible="1"/>
+                            <field name="file" filename="file_name" readonly="state != 'draft'"/>
+                            <field name="file_name" invisible="1"/>
+                            <field name="test_mode" invisible="1"/>
+                            <field name="row_count" invisible="not file" force_save="1"/>
+                        </group>
+                        <group string="How">
+                            <field name="mode" readonly="state != 'draft'"/>
+                            <field name="match_field_id" options="{'no_create': True}"
+                                   invisible="mode == 'create'" readonly="state != 'draft'"/>
+                            <field name="ignore_empty" readonly="state != 'draft'"/>
+                            <field name="create_missing_relations" readonly="state != 'draft'"/>
+                            <field name="chunk_size" readonly="state != 'draft'"/>
+                        </group>
+                    </group>
+                    <group string="Progress" invisible="state == 'draft'">
+                        <group>
+                            <field name="progress" widget="progressbar"/>
+                            <field name="next_row"/>
+                            <field name="duration" invisible="not duration"/>
+                        </group>
+                        <group>
+                            <field name="created_count"/>
+                            <field name="updated_count"/>
+                            <field name="error_count" decoration-danger="error_count > 0"/>
+                            <field name="error_file_name" invisible="1"/>
+                            <field name="error_file" filename="error_file_name" invisible="not error_file"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Columns" name="columns">
+                            <p class="text-muted" invisible="state != 'draft'">
+                                Each column of the file is matched to a field. Change a field name if the guess is wrong,
+                                or clear it to skip the column. Use <code>field/id</code> to give an External ID.
+                            </p>
+                            <field name="column_ids" readonly="state != 'draft'">
+                                <tree editable="bottom" create="false" decoration-muted="not field_path">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="column_index" column_invisible="True"/>
+                                    <field name="header" force_save="1"/>
+                                    <field name="field_path"/>
+                                    <field name="field_info"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Failed Rows" name="errors" invisible="not error_ids">
+                            <field name="error_ids">
+                                <tree>
+                                    <field name="row_number"/>
+                                    <field name="message"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Other" name="other">
+                            <group>
+                                <field name="user_id"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="date_start"/>
+                                <field name="date_end"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="bulk_import_job_view_tree" model="ir.ui.view">
+        <field name="name">bulk.import.job.tree</field>
+        <field name="model">bulk.import.job</field>
+        <field name="arch" type="xml">
+            <tree string="Imports" decoration-danger="state == 'failed'" decoration-info="state in ('queued', 'running')"
+                  decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="model_id"/>
+                <field name="user_id" optional="show"/>
+                <field name="create_date" optional="show"/>
+                <field name="row_count" optional="show"/>
+                <field name="progress" widget="progressbar"/>
+                <field name="created_count" optional="show"/>
+                <field name="updated_count" optional="show"/>
+                <field name="error_count" optional="show" decoration-danger="error_count > 0"/>
+                <field name="test_mode" optional="hide"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'"
+                       decoration-info="state in ('queued', 'running')" decoration-danger="state == 'failed'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="bulk_import_job_view_search" model="ir.ui.view">
+        <field name="name">bulk.import.job.search</field>
+        <field name="model">bulk.import.job</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="model_id"/>
+                <field name="user_id"/>
+                <filter name="my" string="My Imports" domain="[('user_id', '=', uid)]"/>
+                <filter name="active_jobs" string="Running" domain="[('state', 'in', ('queued', 'running'))]"/>
+                <filter name="with_errors" string="With Failed Rows" domain="[('error_count', '>', 0)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_model" string="Model" context="{'group_by': 'model_id'}"/>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="bulk_import_job_action" model="ir.actions.act_window">
+        <field name="name">Imports</field>
+        <field name="res_model">bulk.import.job</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_my': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Import data into any model</p>
+            <p>Upload an Excel or CSV file, check the column matching and start.
+               Bad rows never stop the import: they come back in an Excel file you can fix and import again.</p>
+        </field>
+    </record>
+</odoo>

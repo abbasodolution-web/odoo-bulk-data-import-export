@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="bulk_export_job_view_form" model="ir.ui.view">
+        <field name="name">bulk.export.job.form</field>
+        <field name="model">bulk.export.job</field>
+        <field name="arch" type="xml">
+            <form string="Export">
+                <header>
+                    <button name="action_export" string="Export" type="object" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_download" string="Download" type="object" class="btn-primary"
+                            invisible="not file"/>
+                    <button name="action_refresh" string="Refresh" type="object" icon="fa-refresh"
+                            invisible="state not in ('queued', 'running')"/>
+                    <button name="action_reset" string="Export Again" type="object"
+                            invisible="state not in ('done', 'failed')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,running,done"/>
+                </header>
+                <sheet>
+                    <div class="alert alert-danger mb-3" role="alert" invisible="not message">
+                        <field name="message"/>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" readonly="state != 'draft'"/></h1>
+                    </div>
+                    <group>
+                        <group string="What to export">
+                            <field name="model_id" options="{'no_create': True}" readonly="state != 'draft'"/>
+                            <field name="model_name" invisible="1"/>
+                            <field name="domain" widget="domain" options="{'model': 'model_name'}"
+                                   invisible="not model_id" readonly="state != 'draft'"/>
+                            <field name="record_count" invisible="not model_id"/>
+                        </group>
+                        <group string="File">
+                            <field name="file_format" readonly="state != 'draft'"/>
+                            <field name="include_external_id" readonly="state != 'draft'"/>
+                            <field name="relations_as_xmlid" readonly="state != 'draft'"/>
+                            <field name="use_labels" readonly="state != 'draft'"/>
+                            <field name="chunk_size" readonly="state != 'draft'"/>
+                        </group>
+                    </group>
+                    <group string="Result" invisible="state == 'draft'">
+                        <group>
+                            <field name="exported_count"/>
+                            <field name="file_name" invisible="1"/>
+                            <field name="file" filename="file_name" invisible="not file"/>
+                        </group>
+                        <group>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Fields" name="fields">
+                            <p class="text-muted">Leave empty to export every stored field.</p>
+                            <field name="field_ids" readonly="state != 'draft'" widget="many2many"
+                                   options="{'no_create': True}">
+                                <tree>
+                                    <field name="field_description"/>
+                                    <field name="name"/>
+                                    <field name="ttype"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Other" name="other">
+                            <group>
+                                <field name="user_id"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="bulk_export_job_view_tree" model="ir.ui.view">
+        <field name="name">bulk.export.job.tree</field>
+        <field name="model">bulk.export.job</field>
+        <field name="arch" type="xml">
+            <tree string="Exports" decoration-danger="state == 'failed'" decoration-info="state in ('queued', 'running')">
+                <field name="name"/>
+                <field name="model_id"/>
+                <field name="user_id" optional="show"/>
+                <field name="create_date" optional="show"/>
+                <field name="file_format" optional="show"/>
+                <field name="exported_count"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'"
+                       decoration-info="state in ('queued', 'running')" decoration-danger="state == 'failed'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="bulk_export_job_action" model="ir.actions.act_window">
+        <field name="name">Exports</field>
+        <field name="res_model">bulk.export.job</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Export data from any model</p>
+            <p>Pick a model, filter the records and choose the fields. Large exports run in the background.</p>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_bulk_import_job_user,bulk.import.job user,model_bulk_import_job,group_bulk_data_user,1,1,1,1
+access_bulk_import_column_user,bulk.import.column user,model_bulk_import_column,group_bulk_data_user,1,1,1,1
+access_bulk_import_error_user,bulk.import.error user,model_bulk_import_error,group_bulk_data_user,1,0,0,1
+access_bulk_export_job_user,bulk.export.job user,model_bulk_export_job,group_bulk_data_user,1,1,1,1

@@ -1,0 +1,85 @@
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#0f766e">Bulk Data Import / Export</h2>
+        <h3 class="oe_slogan">Import and export any model, fast, even with millions of rows and messy files</h3>
+        <p class="oe_mt32" style="font-size:16px">
+            Odoo's standard import stops at the first problem and makes you fix the whole file before anything is saved.
+            This module saves every good row, sets the bad ones aside, and gives you an Excel file of the failed rows
+            with the reason next to each one. Fix them and import that same file again.
+        </p>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h3 class="oe_slogan">How it works</h3>
+        <div class="oe_demo oe_screenshot" style="margin:24px auto;max-width:1000px;text-align:center">
+            <p style="font-size:15px;margin-bottom:8px"><b>1. Upload an Excel or CSV file: columns are matched to fields automatically</b></p>
+            <img src="screenshot_columns.png" style="max-width:100%;border:1px solid #ddd;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.12)"/>
+        </div>
+        <div class="oe_demo oe_screenshot" style="margin:24px auto;max-width:1000px;text-align:center">
+            <p style="font-size:15px;margin-bottom:8px"><b>2. The import runs in chunks; bad rows are set aside with the reason</b></p>
+            <img src="screenshot_result.png" style="max-width:100%;border:1px solid #ddd;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.12)"/>
+        </div>
+        <div class="oe_demo oe_screenshot" style="margin:24px auto;max-width:1000px;text-align:center">
+            <p style="font-size:15px;margin-bottom:8px"><b>3. Failed rows come back as Excel: fix them and import the same file again</b></p>
+            <img src="screenshot_error_report.png" style="max-width:100%;border:1px solid #ddd;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.12)"/>
+        </div>
+        <div class="oe_demo oe_screenshot" style="margin:24px auto;max-width:1000px;text-align:center">
+            <p style="font-size:15px;margin-bottom:8px"><b>4. Export any model to Excel or CSV, with External IDs for round trips</b></p>
+            <img src="screenshot_export.png" style="max-width:100%;border:1px solid #ddd;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.12)"/>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h3 class="oe_slogan">Import</h3>
+        <ul style="font-size:15px;line-height:1.8">
+            <li><b>Any model</b>: contacts, products, sale orders with lines, custom models.</li>
+            <li><b>Excel or CSV</b> (.xlsx, .xls, .csv); columns are matched to fields automatically by technical name or label.</li>
+            <li><b>Bad rows never stop the import</b>: each failing row is isolated, everything else is saved.</li>
+            <li><b>Error report</b>: an Excel file of the failed rows, the original cells plus the reason. Re-importable as is.</li>
+            <li><b>Chunks</b>: rows are saved in chunks (500 by default). Big files run in the background,
+                survive restarts, can be cancelled and resumed where they stopped.</li>
+            <li><b>Create, update or both</b>: match existing records by any field (reference, email, barcode...),
+                External ID or database ID.</li>
+            <li><b>Empty cells keep current values</b> on update instead of clearing them (optional).</li>
+            <li><b>Test run</b>: check a whole file without saving anything.</li>
+            <li><b>Template</b>: download an Excel template with the required columns and a sheet describing every field.</li>
+        </ul>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h3 class="oe_slogan">Export</h3>
+        <ul style="font-size:15px;line-height:1.8">
+            <li>Any model, filtered with Odoo's domain editor, to Excel or CSV.</li>
+            <li>Streams records in chunks with flat memory use; large exports run in the background.</li>
+            <li>External ID column and linked records as External IDs: edit the file and import it back to update the same records,
+                or move data to another database.</li>
+        </ul>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h3 class="oe_slogan">Built for speed</h3>
+        <ul style="font-size:15px;line-height:1.8">
+            <li>Uses Odoo's own loader, with chatter tracking switched off during the import.</li>
+            <li>Linked values ("Pakistan", "Pcs") are looked up once per chunk, not once per row.</li>
+            <li>Once a file shows errors, each chunk is checked before saving, so bad rows cost no extra save.</li>
+            <li>Errors that can't be tied to a row are found by splitting the chunk in halves, so only a few extra saves are needed.</li>
+            <li>Access rights and record rules of the user who started the job always apply.</li>
+        </ul>
+        <p style="font-size:15px">No extra apps needed: depends only on Odoo's base, web and bus modules.</p>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h3 class="oe_slogan">Support</h3>
+        <p class="oe_mt32" style="text-align:center;font-size:15px">Questions or ideas: <b>abbasodolution@gmail.com</b></p>
+    </div>
+</section>

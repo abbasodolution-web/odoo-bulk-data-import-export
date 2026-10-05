@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="ir_cron_bulk_jobs" model="ir.cron">
+        <field name="name">Bulk Import / Export: process queued jobs</field>
+        <field name="model_id" ref="model_bulk_import_job"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_process_jobs()</field>
+        <field name="interval_number">5</field>
+        <field name="interval_type">minutes</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+    </record>
+
+    <record id="param_time_budget" model="ir.config_parameter">
+        <field name="key">bulk_data_import_export.time_budget</field>
+        <field name="value">50</field>
+    </record>
+    <record id="param_inline_rows" model="ir.config_parameter">
+        <field name="key">bulk_data_import_export.inline_rows</field>
+        <field name="value">500</field>
+    </record>
+    <record id="param_inline_records" model="ir.config_parameter">
+        <field name="key">bulk_data_import_export.inline_records</field>
+        <field name="value">20000</field>
+    </record>
+</odoo>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_bulk_data_root" name="Import / Export" sequence="95"
+              web_icon="bulk_data_import_export,static/description/icon.png"
+              groups="group_bulk_data_user"/>
+    <menuitem id="menu_bulk_import" name="Imports" parent="menu_bulk_data_root"
+              action="bulk_import_job_action" sequence="10"/>
+    <menuitem id="menu_bulk_export" name="Exports" parent="menu_bulk_data_root"
+              action="bulk_export_job_action" sequence="20"/>
+</odoo>
