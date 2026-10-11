@@ -54,13 +54,14 @@ Optional system parameters:
 - **Bulk Import / Export: User**: own jobs
 - **Bulk Import / Export: Administrator**: all jobs (given to Settings administrators)
 
-## Available for Odoo 17, 18 and 19
+## Available for Odoo 17, 18, 19 and 20
 
 | Odoo | Price | Get it |
 |---|---|---|
 | 17 (v1) | Free (LGPL-3) | [Odoo Apps Store](https://apps.odoo.com/apps/modules/17.0/bulk_data_import_export) |
 | 18 (v2) | $39 (one-time, OPL-1) | [Odoo Apps Store](https://apps.odoo.com/apps/modules/18.0/bulk_data_import_export) |
 | 19 (v2) | $39 (one-time, OPL-1) | [Odoo Apps Store](https://apps.odoo.com/apps/modules/19.0/bulk_data_import_export) |
+| 20 | Coming soon | In development |
 
 ## Support
 
