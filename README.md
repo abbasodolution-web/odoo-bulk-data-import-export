@@ -61,7 +61,7 @@ Optional system parameters:
 | 17 (v1) | Free (LGPL-3) | [Odoo Apps Store](https://apps.odoo.com/apps/modules/17.0/bulk_data_import_export) |
 | 18 (v2) | $39 (one-time, OPL-1) | [Odoo Apps Store](https://apps.odoo.com/apps/modules/18.0/bulk_data_import_export) |
 | 19 (v2) | $39 (one-time, OPL-1) | [Odoo Apps Store](https://apps.odoo.com/apps/modules/19.0/bulk_data_import_export) |
-| 20 | Coming soon | In development |
+| 20 (v3) | $39 (one-time, OPL-1) | [Odoo Apps Store](https://apps.odoo.com/apps/modules/20.0/bulk_data_import_export) |
 
 ## Support
 
