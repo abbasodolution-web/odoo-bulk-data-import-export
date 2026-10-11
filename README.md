@@ -54,7 +54,7 @@ Optional system parameters:
 - **Bulk Import / Export: User**: own jobs
 - **Bulk Import / Export: Administrator**: all jobs (given to Settings administrators)
 
-## Available for Odoo 17, 18, 19 and 20
+## Versions: Odoo 17, 18, 19 and 20
 
 | Odoo | Price | Get it |
 |---|---|---|
